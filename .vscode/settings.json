@@ -3,6 +3,5 @@
   "formattingToggle.activateFor": [
     "formatOnSave"
   ],
-  "standard.autoFixOnSave": true,
-  "standard.usePackageJson": true
+  "eslint.autoFixOnSave": true
 }

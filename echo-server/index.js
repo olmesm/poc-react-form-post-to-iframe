@@ -1,1 +1,1 @@
-module.exports = async req => req;
+module.exports = async req => req

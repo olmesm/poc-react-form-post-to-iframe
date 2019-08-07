@@ -1,7 +1,16 @@
-import React from "react";
+import React from 'react'
 
 function App() {
-  return <>Hello!</>;
+  return (
+    <div>
+      <button
+        onClick={() => {
+          console.log('yes')
+        }}>
+        Open iframe
+      </button>
+    </div>
+  )
 }
 
-export default App;
+export default App
