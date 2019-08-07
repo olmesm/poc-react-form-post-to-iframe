@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "concurrently": "^4.1.1",
+    "micro": "^9.3.4",
+    "micro-dev": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently npm:start:react npm:start:server",
+    "start:react": "react-scripts start",
+    "start:server": "micro-dev -p 3030 echo-server/index.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
