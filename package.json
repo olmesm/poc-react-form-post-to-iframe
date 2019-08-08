@@ -1,5 +1,5 @@
 {
-  "name": "form-posting",
+  "name": "poc-react-form-post-to-iframe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
