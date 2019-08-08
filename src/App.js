@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  forwardRef,
+  useImperativeHandle,
+  useRef
+} from 'react'
 
 const TIME_OUT_MS = 3000
 const DATA = {
@@ -27,9 +34,21 @@ const hiddenStyle = {
   overflow: 'hidden'
 }
 
-const PostForm = ({ setSubmitRef, data }) => {
+const PostForm = forwardRef(({ data }, ref) => {
+  const buttonRef = useRef()
+
+  useImperativeHandle(ref, () => ({
+    click: () => {
+      buttonRef.current.click()
+    }
+  }))
+
   const dataElements = Object.keys(data).map((key, index) => (
-    <input defaultValue={data[key]} key={`${key}-${index}`} name={key} />
+    <input
+      defaultValue={data[key]}
+      key={`${key}-${index}`}
+      name={key}
+    /> /** ` */
   ))
 
   return (
@@ -39,42 +58,41 @@ const PostForm = ({ setSubmitRef, data }) => {
       method="post"
       target="output_frame">
       {dataElements}
-      <button ref={setSubmitRef} />
+      <button ref={buttonRef} />
     </form>
   )
-}
+})
 
 const IframePanel = ({ show }) => {
   return (
     <iframe
       style={show ? visibleStyle : hiddenStyle}
-      title="abc"
+      title="iframe"
       name="output_frame"
-      src=""
       id="output_frame"></iframe>
   )
 }
 
 function App() {
   const [shouldShow, setShouldShow] = useState(false)
-  const [submitRef, setSubmitRef] = useState(undefined)
+  const buttonRef = useRef()
 
   const onClick = useCallback(() => {
     setShouldShow(true)
-    submitRef.click()
-  }, [submitRef])
+    buttonRef.current.click()
+  }, [buttonRef])
 
   useEffect(() => {
-    if (submitRef) {
+    if (buttonRef) {
       setTimeout(onClick, TIME_OUT_MS)
     }
-  }, [onClick, submitRef])
+  }, [onClick, buttonRef])
 
   return (
     <>
       <IframePanel show={shouldShow} />
 
-      <PostForm data={DATA} setSubmitRef={setSubmitRef} />
+      <PostForm data={DATA} ref={buttonRef} />
 
       <p>Will automagically submit after {TIME_OUT_MS / 1000} seconds</p>
 
